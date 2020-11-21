@@ -1,0 +1,17 @@
+.home ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+.home ul li .item p span {
+    padding: 0 20px;
+}
+
+.home ul li .item p span:nth-child(1) {
+    color: blue;
+}
+
+.home ul li .item p span:last-child {
+    color: palevioletred;
+}
