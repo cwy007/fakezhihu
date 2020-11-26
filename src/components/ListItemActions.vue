@@ -91,7 +91,7 @@ export default {
     "thanks_count",
     "voteup_count",
     "metrics_area",
-    "showActionitems"
+    "showActionItems"
   ]
 };
 </script>

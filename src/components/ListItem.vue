@@ -50,11 +50,27 @@
         </el-button>
       </div>
     </div>
+
+    <list-item-actions
+      :thanks_count="22"
+      :comment_count="33"
+      :voteup_count="44"
+      :showActionItems="[
+        'vote',
+        'thanks',
+        'comment',
+        'share',
+        'favorite',
+        'more'
+      ]"
+    />
   </div>
 </template>
 
 <script>
+import ListItemActions from "./ListItemActions.vue";
 export default {
+  components: { ListItemActions },
   props: ["item", "showPart", "type"],
   data() {
     return {

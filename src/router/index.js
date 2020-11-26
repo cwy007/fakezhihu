@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import Main from "../views/Main.vue";
+import ListItem from "../components/ListItem.vue";
 
 Vue.use(VueRouter);
 
@@ -13,7 +14,13 @@ const routes = [
       {
         path: "",
         component: Main,
-        name: "home"
+        children: [
+          {
+            path: "",
+            name: "home",
+            component: ListItem
+          }
+        ]
       }
     ]
   },

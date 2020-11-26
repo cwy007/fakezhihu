@@ -1,4 +1,4 @@
-# vue_demo
+# fakezhihu
 
 ## Project setup
 ```
@@ -27,3 +27,7 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+### 模拟数据
+
+https://www.zhihu.com/api/v3/feed/topstory/recommend?session_token=27dc057ceb1e5b856292cbb7e1aa706e&desktop=true&page_number=3&limit=6&action=down&after_id=1

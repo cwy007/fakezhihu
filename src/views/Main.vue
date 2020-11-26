@@ -1,6 +1,7 @@
 <template>
   <div class="main-content">
     <div class="list">
+      <!-- 包含 router-view -->
       <main-list-wrapper />
     </div>
     <div class="sidebar">
