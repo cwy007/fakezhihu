@@ -1,26 +1,20 @@
 <template>
   <div class="home">
-    <TodoList />
+    <main-header />
+    <router-view />
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import TodoList from "@/components/TodoList.vue";
-import "@/assets/style.css";
+import MainHeader from "@/components/MainHeader.vue";
 
 export default {
-  name: "Home",
+  name: "home",
   components: {
-    TodoList
+    MainHeader
   }
 };
 </script>
 
-<style lang="css">
-.home {
-  margin: 0 auto;
-  text-align: center;
-  font-size: 12.077rpx;
-}
-</style>
+<style lang="css"></style>
