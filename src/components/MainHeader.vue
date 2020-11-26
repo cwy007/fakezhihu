@@ -1,7 +1,7 @@
 <template>
   <header class="main-header">
     <div class="header-content">
-      <router-link class="m-r-20" :to="{ name: 'Home' }">
+      <router-link class="m-r-20" :to="{ name: 'home' }">
         <img src="./../assets/imgs/logo.png" alt="" class="logo" />
       </router-link>
       <el-menu

@@ -14,7 +14,7 @@ import MainListWrapper from "@/components/MainListWrapper.vue";
 import MainSidebar from "@/components/MainSidebar.vue";
 
 export default {
-  name: "main",
+  name: "Main",
   components: {
     MainListWrapper,
     MainSidebar
