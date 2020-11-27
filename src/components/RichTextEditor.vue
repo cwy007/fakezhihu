@@ -51,7 +51,7 @@ export default {
       this.$refs.myQuillEditor.quill.root.innerHTML = content;
     },
     updateRichText(content) {
-      this.$emit("updateContent", content.html, content.text);
+      this.$emit("update-content", content.html, content.text);
     }
   }
 };
