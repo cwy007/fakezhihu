@@ -2,9 +2,7 @@ import axios from "axios";
 import config from "./config";
 
 // 判断是路由跳转还是 axios 请求
-console.log("process.server", process.server);
 if (process.server) {
-  console.log("process.env.PORT", process.env.PORT);
   config.baseURL = `http://${process.env.HOST || "localhost"}:${process.env
     .PORT || 3000}`;
 }
