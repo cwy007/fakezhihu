@@ -203,13 +203,28 @@ export default {
           }
         });
     },
+    async login() {
+      await request
+        .post("/users/login", {
+          name: this.loginForm.username,
+          pwd: md5(this.loginForm.password)
+        })
+        .then(res => {
+          if (res.status == 200) {
+            this.$message.success("登录成功");
+            this.$router.push({ name: "home" });
+          } else {
+            this.$message.error(res.data.msg);
+          }
+        });
+    },
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
           if (this.nowStatus === "register") {
             this.register();
           } else {
-            console.log("触发登录方法");
+            this.login();
           }
         } else {
           this.$message.error("error submit!!!");
