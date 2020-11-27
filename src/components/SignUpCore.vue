@@ -106,6 +106,9 @@
 </template>
 
 <script>
+import request from "@/service";
+import md5 from "md5";
+
 export default {
   data() {
     const validatePass = (rule, value, callback) => {
@@ -183,11 +186,28 @@ export default {
     };
   },
   methods: {
+    async register() {
+      await request
+        .post("/users/create", {
+          name: this.registerForm.name,
+          pwd: md5(this.registerForm.password),
+          email: this.registerForm.email
+        })
+        .then(res => {
+          // 201-已创建
+          if (res.status === 201) {
+            this.$message.success("注册成功");
+            this.$router.push({ name: "home" });
+          } else {
+            this.$message.error(res.data.msg);
+          }
+        });
+    },
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
           if (this.nowStatus === "register") {
-            console.log("触发注册方法");
+            this.register();
           } else {
             console.log("触发登录方法");
           }
