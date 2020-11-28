@@ -52,9 +52,14 @@
     </div>
 
     <list-item-actions
-      :thanks_count="22"
-      :comment_count="33"
-      :voteup_count="44"
+      v-bind="$attrs"
+      v-on="$listeners"
+      :type="type"
+      :itemId="item.id"
+      :thanks_count="JSON.parse(item.status.thanks).length"
+      :comment_count="20"
+      :voteup_count="JSON.parse(item.status.voteUp).length"
+      :relationship="33"
       :showActionItems="[
         'vote',
         'thanks',
@@ -70,6 +75,7 @@
 <script>
 import ListItemActions from "./ListItemActions.vue";
 export default {
+  inheritAttrs: false,
   components: { ListItemActions },
   props: ["item", "showPart", "type"],
   data() {

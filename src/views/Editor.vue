@@ -50,7 +50,7 @@ export default {
       title: "", // 标题
       content: "", // 富文本
       contentText: "", // 纯文本
-      placeHolder: "亲输入正文",
+      placeHolder: "请输入正文",
       imgUrl: "" // 题图url
     };
   },
@@ -75,6 +75,7 @@ export default {
           content: this.content,
           excerpt: this.contentText.slice(0, 100),
           title: this.title,
+          imgUrl: this.imgUrl,
           userId: getCookies("id")
         })
         .then(res => {

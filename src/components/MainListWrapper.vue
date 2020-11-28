@@ -19,15 +19,43 @@
 
 <script>
 import MainListNav from "./MainListNav.vue";
-import mockData from "../../mock/target";
+import request from "../service";
 
 export default {
   components: { MainListNav },
   data() {
     return {
       type: "main",
-      fakeInfo: mockData
+      fakeInfo: [],
+      loading: false
     };
+  },
+  watch: {
+    $route: "fetchData"
+  },
+  mounted() {
+    this.fetchData();
+  },
+  methods: {
+    fetchData() {
+      this.loading = true;
+      if (this.$route.name === "home") {
+        this.getNormalList();
+        this.loading = false;
+      } else if (this.$route.name === "hot") {
+        console.log("route name is hot");
+      } else {
+        this.getNormalList();
+        this.loading = false;
+      }
+    },
+    async getNormalList() {
+      await request.get("/articles/list").then(res => {
+        if (res.data.status === 200) {
+          this.fakeInfo = res.data.list;
+        }
+      });
+    }
   }
 };
 </script>
