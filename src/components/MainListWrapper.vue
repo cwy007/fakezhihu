@@ -9,7 +9,7 @@
           :key="index"
           :item="item"
           :index="index"
-          :type="'item.type'"
+          :type="item.type"
           :showPart="['title']"
         />
       </div>

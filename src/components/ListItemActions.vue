@@ -71,7 +71,7 @@
           class="btn-text-gray"
           size="medium"
           type="text"
-          icon="elicon-more"
+          icon="el-icon-more"
         ></el-button>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item>没有帮助</el-dropdown-item>

@@ -5,6 +5,7 @@ import Main from "../views/Main.vue";
 import ListItem from "../components/ListItem.vue";
 import SignUp from "../views/SignUp.vue";
 import Editor from "../views/Editor.vue";
+import DetailsArticle from "../views/DetailsArticle.vue";
 
 Vue.use(VueRouter);
 
@@ -35,6 +36,11 @@ const routes = [
     path: "/editor/:articleId",
     name: "editor",
     component: Editor
+  },
+  {
+    path: "/article/:id",
+    name: "detailsArticle",
+    component: DetailsArticle
   },
   {
     path: "/about",

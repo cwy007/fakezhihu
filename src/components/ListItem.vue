@@ -1,7 +1,16 @@
 <template>
   <div class="answer-main">
     <div class="title" v-if="showPart.indexOf('title') >= 0">
-      <h2>{{ transtedInfo.title }}</h2>
+      <h2>
+        <router-link
+          :to="{
+            name: type === 0 ? 'detailsArticle' : 'detailsQuestion',
+            params: { id: item.id }
+          }"
+        >
+          {{ transtedInfo.title }}
+        </router-link>
+      </h2>
     </div>
 
     <div class="creater-info" v-if="showPart.indexOf('creator') >= 0">
@@ -75,9 +84,9 @@
 <script>
 import ListItemActions from "./ListItemActions.vue";
 export default {
+  props: ["item", "showPart", "type"],
   inheritAttrs: false,
   components: { ListItemActions },
-  props: ["item", "showPart", "type"],
   data() {
     return {
       showType: "excerpt"
@@ -85,22 +94,23 @@ export default {
   },
   computed: {
     transtedInfo() {
-      if (this.type === "article") {
+      // article
+      if (this.type === 0) {
         return {
           title: this.item.title,
           cover: this.item.image_url || ""
         };
-      } else if (this.type === "answer") {
+        // answer
+      } else if (this.type === 2) {
         return {
           title: this.item.question.title,
           cover: this.item.thumbnail || ""
         };
-      } else {
-        return {
-          title: "",
-          cover: ""
-        };
       }
+      return {
+        title: "",
+        cover: ""
+      };
     }
   }
 };
