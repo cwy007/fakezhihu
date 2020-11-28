@@ -8,11 +8,21 @@
       :options="options"
       @change="updateRichText($event)"
     ></quill-editor>
+
+    <el-upload
+      class="hidden"
+      action="/imgs/upload"
+      :on-success="uploadSuc"
+      accept=".jpg,.jpeg,.JPG,.JPEG,.png,.PNG"
+    >
+      <div ref="hiddenUpload"></div>
+    </el-upload>
   </div>
 </template>
 
 <script>
 import { quillEditor } from "vue-quill-editor";
+import { imgDec } from "../lib/config";
 
 export default {
   props: ["content", "placeHolder"],
@@ -44,9 +54,25 @@ export default {
     };
   },
   mounted() {
+    this.$refs.myQuillEditor.quill
+      .getModule("toolbar")
+      .addHandler("image", this.imgHandler);
     this.$refs.myQuillEditor.quill.root.dataset.placeholder = this.placeHolder;
   },
   methods: {
+    imgHandler(image) {
+      if (image) {
+        this.$refs.hiddenUpload.click();
+      }
+    },
+    uploadSuc(response) {
+      const url = `${imgDec}${response.fileName}`;
+      this.$refs.myQuillEditor.quill.insertEmbed(
+        this.$refs.myQuillEditor.quill.getSelection(),
+        "image",
+        url
+      );
+    },
     updateContent(content) {
       this.$refs.myQuillEditor.quill.root.innerHTML = content;
     },

@@ -47,11 +47,11 @@ export default {
   components: { EditorHeader, RichTextEditor },
   data() {
     return {
-      title: "",
-      content: "",
-      contentText: "",
+      title: "", // 标题
+      content: "", // 富文本
+      contentText: "", // 纯文本
       placeHolder: "亲输入正文",
-      imgUrl: ""
+      imgUrl: "" // 题图url
     };
   },
   methods: {
@@ -73,10 +73,7 @@ export default {
       await request
         .post("/articles", {
           content: this.content,
-          excerpt:
-            this.contentText.length > 100
-              ? this.contentText.slice(0, 100)
-              : this.contentText,
+          excerpt: this.contentText.slice(0, 100),
           title: this.title,
           userId: getCookies("id")
         })
