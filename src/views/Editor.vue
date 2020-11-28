@@ -2,6 +2,24 @@
   <div class="editor">
     <editor-header @release-articles="releaseArticles" />
     <div class="content m-t-50">
+      <el-upload
+        v-show="imgUrl === ''"
+        class="img-upload m-b-15"
+        drag
+        action="/imgs/upload"
+        :on-success="uploadSuc"
+        accept=".jpg, .jpeg, .JPG, .png, .PNG"
+      >
+        <i class="el-icon-upload"></i>
+        <div ref="hiddenUpload">添加题图</div>
+      </el-upload>
+      <img
+        v-show="imgUrl !== ''"
+        class="oldImg m-b-15"
+        :src="imgUrl"
+        @click="$refs.hiddenUpload.click()"
+      />
+
       <el-input
         v-model="title"
         class="m-b-15"
@@ -23,6 +41,7 @@ import EditorHeader from "../components/EditorHeader.vue";
 import RichTextEditor from "../components/RichTextEditor.vue";
 import request from "@/service";
 import { getCookies } from "@/lib/utils";
+import { imgDec } from "@/lib/config.js";
 
 export default {
   components: { EditorHeader, RichTextEditor },
@@ -31,10 +50,14 @@ export default {
       title: "",
       content: "",
       contentText: "",
-      placeHolder: "亲输入正文"
+      placeHolder: "亲输入正文",
+      imgUrl: ""
     };
   },
   methods: {
+    uploadSuc(response) {
+      this.imgUrl = `${imgDec}${response.fileName}`;
+    },
     updateContent(content, contentText) {
       this.content = content;
       this.contentText = contentText;
