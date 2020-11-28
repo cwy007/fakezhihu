@@ -11,6 +11,9 @@ module.exports = {
       },
       "/imgs": {
         target: "http://127.0.0.1:3000"
+      },
+      "/questions": {
+        target: "http://127.0.0.1:3000"
       }
     }
   }

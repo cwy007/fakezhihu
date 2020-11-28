@@ -1,5 +1,12 @@
 <template>
   <header class="main-header">
+    <el-dialog
+      title="新的问题"
+      :visible.sync="askModelVisible"
+      :modal-append-to-body="false"
+    >
+      <ask-model @change-ask-model-visible="changeAskModelVisible" />
+    </el-dialog>
     <div class="header-content">
       <router-link class="m-r-20" :to="{ name: 'home' }">
         <img src="./../assets/imgs/logo.png" alt="" class="logo" />
@@ -22,7 +29,9 @@
       >
         <el-button slot="append" icon="el-icon-search"></el-button>
       </el-input>
-      <el-button size="small" type="primary">提问</el-button>
+      <el-button size="small" type="primary" @click="askModelVisible = true">
+        提问
+      </el-button>
 
       <div class="userInfo" v-if="!isLogin">
         <router-link :to="{ name: 'signup' }">登录</router-link>
@@ -60,14 +69,17 @@
 
 <script>
 import request from "@/service";
+import AskModel from "./AskModel.vue";
 
 export default {
+  components: { AskModel },
   data() {
     return {
       activeIndex: "1",
       keywords: "",
       isLogin: false,
-      name: ""
+      name: "",
+      askModelVisible: false
     };
   },
   mounted() {
@@ -101,6 +113,9 @@ export default {
     },
     goToPersonalPage() {
       console.log("跳转到用户首页");
+    },
+    changeAskModelVisible(status) {
+      this.askModelVisible = status;
     }
   }
 };

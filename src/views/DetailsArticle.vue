@@ -1,5 +1,10 @@
 <template>
   <div class="article-details clearfix" v-loading="loading">
+    <el-button type="primary" round>
+      <router-link :to="{ name: 'home' }"
+        ><i class="el-icon-back"></i>返回文章列表
+      </router-link>
+    </el-button>
     <div class="article-wrapper">
       <div class="cover">
         <img :src="articleData.cover" alt="" />
