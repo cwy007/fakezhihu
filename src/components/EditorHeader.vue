@@ -1,6 +1,6 @@
 <template>
   <header class="editor-header">
-    <router-link class="m-r-20 logo-wrapper" to="{ name: 'home' }">
+    <router-link class="m-r-20 logo-wrapper" :to="{ name: 'home' }">
       <img class="logo" src="./../assets/imgs/logo.png" alt="" />
     </router-link>
     <div class="header-content">

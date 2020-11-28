@@ -346,6 +346,11 @@
           margin: 20px 0;
           width: 33%;
         }
+        .icon-item > a {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
         .thunder-btn {
           &:hover {
             color: #FECE2F;
