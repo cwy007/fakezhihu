@@ -137,7 +137,40 @@
             <el-button type="primary" @click="createAnswer">提交回答</el-button>
           </div>
         </el-card>
-        回答展示
+
+        <el-card v-show="!currentAnswerEmpty" class="m-b-25">
+          <list-item
+            class="without-border no-padding"
+            :item="currentAnswer"
+            :showPart="['creator', 'votes']"
+            :type="2"
+          />
+        </el-card>
+        <!-- <el-card v-show="allAnswerLength === 0">
+          <div class="no-answer m-t-25 m-b-25">当前没有回答</div>
+        </el-card> -->
+        <!-- <el-card v-show="answersExist">
+          <div class="list">
+            <div class="list-header">
+              <span>
+                {{ questionData.answers ? questionData.answers.length : 0 }}
+                个回答
+              </span>
+            </div>
+            <div
+              class="list-item"
+              v-for="(answer, index) in questionData.answers"
+              :key="index"
+            >
+              <list-item
+                :item="answer"
+                :index="index"
+                :showPart="['creator', 'votes']"
+                :type="2"
+              />
+            </div>
+          </div>
+        </el-card> -->
       </div>
 
       <div class="question-main-sidebar">
@@ -178,23 +211,30 @@ import ListItemActions from "../components/ListItemActions.vue";
 import RichTextEditor from "../components/RichTextEditor.vue";
 import SidebarFooter from "../components/SidebarFooter.vue";
 import _ from "lodash";
+import ListItem from "../components/ListItem.vue";
 
 export default {
-  components: { AskModel, ListItemActions, RichTextEditor, SidebarFooter },
+  components: {
+    AskModel,
+    ListItemActions,
+    RichTextEditor,
+    SidebarFooter,
+    ListItem
+  },
   data() {
     return {
       loading: true,
-      askModelVisible: false,
+      askModelVisible: false, // 修改问题框是否可见
       questionData: {},
       authorLoading: false,
-      answerVisible: false,
-      commentShowType: "all",
-      showType: "excerpt",
+      answerVisible: false, // 回答框是否可见
+      commentShowType: "all", // 评论展示状态
+      showType: "excerpt", // 问题详情展示状态
       answerContent: "",
-      answerExcerpt: "",
-      placeHolder: "写回答",
+      answerExcerpt: "", // 回答内容简介
+      placeHolder: "写回答", // 回答框输入placeholder
       authorInfo: {},
-      currentAnswer: {}
+      currentAnswer: {} // 当前作者回答
     };
   },
   mounted() {
@@ -203,6 +243,19 @@ export default {
   computed: {
     currentAnswerEmpty() {
       return _.isEmpty(this.currentAnswer);
+    },
+    allAnswerLength() {
+      const questionDataAnswersLength = this.questionData.answers
+        ? this.questionData.answers.length
+        : 0;
+      return this.currentAnswerEmpty
+        ? questionDataAnswersLength
+        : questionDataAnswersLength + 1;
+    },
+    answersExist() {
+      return this.questionData.answers
+        ? this.questionData.answers.length > 0
+        : false;
     }
   },
   methods: {
@@ -217,6 +270,15 @@ export default {
         })
         .then(res => {
           this.questionData = res.data.content;
+          this.questionData.answers = _.compact(
+            _.map(this.questionData.answers, item => {
+              if (item.creatorId === parseFloat(getCookies("id"))) {
+                this.currentAnswer = item;
+                return null;
+              }
+              return item;
+            })
+          );
           this.loading = false;
         });
     },
@@ -236,7 +298,7 @@ export default {
     async createAnswer() {
       this.authorLoading = true;
       await request
-        .post("/answer", {
+        .post("/answers", {
           creatorId: getCookies("id"),
           content: this.answerContent,
           excerpt: this.answerExcerpt,

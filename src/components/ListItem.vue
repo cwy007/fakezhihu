@@ -15,7 +15,7 @@
 
     <div class="creater-info" v-if="showPart.indexOf('creator') >= 0">
       <div class="avatar">
-        <img :src="item.author.avatarUrl" alt="" />
+        <img :src="item.author ? item.author.avatarUrl : ''" alt="" />
       </div>
       <div class="userinfo">
         <p class="username">{{ item.author.name }}</p>
@@ -38,7 +38,7 @@
             <el-button
               class="btn-no-padding"
               type="text"
-              icon="el-iconarrow-down"
+              icon="el-icon-arrow-down"
               @click="showType = 'all'"
             >
               阅读全文
@@ -97,11 +97,11 @@ export default {
       // article
       if (this.type === 0) {
         return {
-          title: this.item.title,
-          cover: this.item.image_url || ""
+          title: this.showPart.includes("title") ? this.item.title : "",
+          cover: this.item.cover || ""
         };
         // answer
-      } else if (this.type === 2) {
+      } else if (this.type === 2 && this.showPart.includes("title")) {
         return {
           title: this.item.question.title,
           cover: this.item.thumbnail || ""
