@@ -6,6 +6,7 @@ import ListItem from "../components/ListItem.vue";
 import SignUp from "../views/SignUp.vue";
 import Editor from "../views/Editor.vue";
 import DetailsArticle from "../views/DetailsArticle.vue";
+import DetailsQuestion from "../views/DetailsQuestion.vue";
 
 Vue.use(VueRouter);
 
@@ -41,6 +42,11 @@ const routes = [
     path: "/article/:id",
     name: "detailsArticle",
     component: DetailsArticle
+  },
+  {
+    path: "/question/:id",
+    name: "detailsQuestion",
+    component: DetailsQuestion
   },
   {
     path: "/about",

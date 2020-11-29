@@ -90,7 +90,7 @@ export default {
           if (res.data.status === 202) {
             this.$message.success("问题修改成功");
             this.$emit("change-ask-model-visible", false);
-            this.$emit("updateQuestion");
+            this.$emit("update-question");
           } else {
             this.$message.error("问题修改失败，请稍后再试");
           }
