@@ -138,7 +138,7 @@
           </div>
         </el-card>
 
-        <el-card v-show="!currentAnswerEmpty" class="m-b-25">
+        <el-card v-if="!currentAnswerEmpty" class="m-b-25">
           <list-item
             class="without-border no-padding"
             :item="currentAnswer"
