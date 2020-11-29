@@ -146,10 +146,10 @@
             :type="2"
           />
         </el-card>
-        <!-- <el-card v-show="allAnswerLength === 0">
+        <el-card v-show="allAnswerLength === 0">
           <div class="no-answer m-t-25 m-b-25">当前没有回答</div>
-        </el-card> -->
-        <!-- <el-card v-show="answersExist">
+        </el-card>
+        <el-card v-show="answersExist">
           <div class="list">
             <div class="list-header">
               <span>
@@ -170,7 +170,7 @@
               />
             </div>
           </div>
-        </el-card> -->
+        </el-card>
       </div>
 
       <div class="question-main-sidebar">
