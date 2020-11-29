@@ -1,6 +1,7 @@
 <template>
   <div class="question-details" v-loading="loading">
     <div class="question-header">
+      <!-- el-dialog 弹窗是默认隐藏的 -->
       <el-dialog
         title="修改问题"
         :visible.sync="askModelVisible"
@@ -13,6 +14,7 @@
           :oldItem="questionData"
         />
       </el-dialog>
+
       <div class="question-header-content">
         <div class="question-header-main">
           <h1 class="question-header-title">
@@ -22,10 +24,10 @@
               class="m-l-25 gray"
               @click="askModelVisible = true"
             >
-              <i class="el-icon-edit el-icon--left"></i>
-              编辑
+              <i class="el-icon-edit el-icon--left"></i>编辑
             </el-button>
           </h1>
+
           <div
             class="question-header-details"
             v-show="showType === 'excerpt'"
@@ -57,9 +59,21 @@
             </el-button>
           </div>
         </div>
-        <!-- question-header-main -->
-        静态展示部分
+        <!-- /.question-header-main -->
+
+        <div class="question-header-side">
+          <div class="question-header-side-item">
+            <p class="name">被浏览</p>
+            <p class="num">232</p>
+          </div>
+          <div class="question-header-side-item">
+            <p class="name">关注者</p>
+            <p class="num">12343</p>
+          </div>
+        </div>
       </div>
+      <!-- /.question-header-content -->
+
       <div class="question-header-footer">
         <div class="question-header-footer-inner">
           <div class="question-header-footer-main">
@@ -77,8 +91,8 @@
             </div>
             <div class="question-header-actions">
               <el-button class="button" type="info" plain>
-                <span class="el el-icon-fakezhihu-and-person-fill"></span>
-                邀请回答
+                <span class="el el-icon-fakezhihu-add-person-fill"></span
+                >邀请回答
               </el-button>
               <list-item-actions
                 class="actions"
@@ -92,6 +106,7 @@
       </div>
     </div>
 
+    <!-- 写回答的编辑框，默认隐藏 -->
     <div class="question-main">
       <div class="question-main-clo">
         <el-card
@@ -112,7 +127,7 @@
             class="with-border m-t-25 m-b-25"
             ref="richtext"
             :content="answerContent"
-            :placeholder="placeHolder"
+            :placeHolder="placeHolder"
             @update-content="updateContent"
           />
           <div class="m-b-25">
@@ -126,7 +141,29 @@
       </div>
 
       <div class="question-main-sidebar">
-        静态侧边栏展示内容
+        <el-card class="m-b-15">
+          <div class="header"><span>相关问题</span></div>
+          <div class="content">
+            <div class="content-item">
+              <a href="#" class="question">
+                vuex 是什么？怎么使用？哪种功能场景使用它？
+              </a>
+              <span class="answer-count">244个回答</span>
+            </div>
+            <div class="content-item">
+              <a href="#" class="question">
+                vue-router 有哪几种导航钩子?
+              </a>
+              <span class="answer-count">244个回答</span>
+            </div>
+            <div class="content-item">
+              <a href="#" class="question">
+                vue 的双向绑定的原理是什么(常考)？
+              </a>
+              <span class="answer-count">244个回答</span>
+            </div>
+          </div>
+        </el-card>
         <sidebar-footer />
       </div>
     </div>
@@ -222,7 +259,7 @@ export default {
     },
     showAnswerPart() {
       this.answerVisible = true;
-      this.getAuthorInfo;
+      this.getAuthorInfo();
     }
   }
 };

@@ -14,6 +14,9 @@ module.exports = {
       },
       "/questions": {
         target: "http://127.0.0.1:3000"
+      },
+      "/answers": {
+        target: "http://127.0.0.1:3000"
       }
     }
   }

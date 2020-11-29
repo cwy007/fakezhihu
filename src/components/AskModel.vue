@@ -10,7 +10,7 @@
       ref="richtext"
       :content="description"
       :placeHolder="placeHolder"
-      @updateContent="updateContent"
+      @update-content="updateContent"
     />
     <div class="footer m-t-10">
       <el-button @click="$emit('change-ask-model-visible', false)">
@@ -42,13 +42,14 @@ export default {
   },
   mounted() {
     if (!_.isEmpty(this.oldItem)) {
-      this.title = this.oldItem;
+      this.title = this.oldItem.title;
       this.description = this.oldItem.description;
       // 调用富文本组件中更新内容的方法
-      this.$ref.richtext.updateContent(this.description);
+      this.$refs.richtext.updateContent(this.description);
     }
   },
   methods: {
+    // 处理自组件触发的事件
     updateContent(content, contentText) {
       this.description = content;
       this.excerpt = contentText.slice(0, 100);
@@ -79,7 +80,7 @@ export default {
     },
     async updateQuestion() {
       await request
-        .put("/question", {
+        .put("/questions", {
           questionId: this.oldItem.id,
           title: this.title,
           excerpt: this.excerpt,
@@ -89,8 +90,8 @@ export default {
         .then(res => {
           if (res.data.status === 202) {
             this.$message.success("问题修改成功");
-            this.$emit("change-ask-model-visible", false);
-            this.$emit("update-question");
+            this.$emit("change-ask-model-visible", false); // 隐藏修改弹窗
+            this.$emit("update-question"); // 修改成功后，重新获取新的问题question
           } else {
             this.$message.error("问题修改失败，请稍后再试");
           }
