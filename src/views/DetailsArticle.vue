@@ -30,6 +30,7 @@
       :voteup_count="JSON.parse(articleData.status.voteUp).length"
       :relationship="33"
       :showActionItems="showActionItems"
+      :type="0"
     />
   </div>
 </template>

@@ -66,7 +66,8 @@
       :type="type"
       :itemId="item.id"
       :thanks_count="JSON.parse(item.status.thanks).length"
-      :comment_count="20"
+      :comment_count="commentCount"
+      @update-comment-count="updateCommentCount"
       :voteup_count="JSON.parse(item.status.voteUp).length"
       :relationship="33"
       :commentShowType="showType"
@@ -84,12 +85,15 @@
 
 <script>
 import ListItemActions from "./ListItemActions.vue";
+import request from "@/service";
+
 export default {
   props: ["item", "showPart", "type"],
   inheritAttrs: false,
   components: { ListItemActions },
   data() {
     return {
+      commentCount: this.item.comments ? this.item.comments.length : 0,
       showType: "excerpt"
     };
   },
@@ -112,6 +116,38 @@ export default {
         title: "",
         cover: ""
       };
+    }
+  },
+  methods: {
+    async updateCommentCount() {
+      console.log("update-comment-count is called");
+      await request
+        .get("/articles", {
+          articleId: this.item.id
+        })
+        .then(res => {
+          if (res.data.status === 200) {
+            this.commentCount = res.data.content.comments
+              ? res.data.content.comments.length
+              : 0;
+          } else {
+            this.$message.error("获取文章失败，请稍后再试");
+          }
+        });
+    },
+    async getArticle() {
+      await request
+        .get("/articles", {
+          articleId: this.item.id
+        })
+        .then(res => {
+          if (res.data.status === 200) {
+            this.loading = false;
+          } else {
+            this.$message.error("获取文章失败，请稍后再试");
+            this.$router.go(-1);
+          }
+        });
     }
   }
 };

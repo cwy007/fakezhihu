@@ -7,6 +7,7 @@
       :key="index"
       :item="comment"
       @get-comments="getComments"
+      v-on="$listeners"
     />
     <div class="comment-part clearfix">
       <el-input class="comment-input" v-model="comment" />
@@ -65,6 +66,7 @@ export default {
         });
     },
     async createComment() {
+      console.log("createComment is called");
       await request
         .post("/comments", {
           targetId: this.targetId,
@@ -76,6 +78,8 @@ export default {
           if (res.data.status === 201) {
             this.$message.success("评论成功");
             this.getComments();
+            this.comment = "";
+            this.$emit("update-comment-count");
           }
         });
     }

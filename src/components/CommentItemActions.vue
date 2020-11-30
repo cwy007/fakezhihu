@@ -146,6 +146,7 @@ export default {
           if (res.data.status === 202) {
             this.$message.success("删除成功");
             this.$emit("get-comments");
+            this.$emit("update-comment-count"); // 删除评论时，更新文章下面的评论数
           }
         });
     }
