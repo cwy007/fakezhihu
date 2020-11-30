@@ -115,8 +115,6 @@
 </template>
 
 <script>
-import CommentList from "./CommentList.vue";
-
 export default {
   props: [
     "comment_count",
@@ -134,7 +132,6 @@ export default {
       commentDialogShow: false // 评论弹窗
     };
   },
-  components: { CommentList },
   methods: {
     displayComments() {
       if (this.commentShowType === "excerpt") {

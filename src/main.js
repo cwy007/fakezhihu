@@ -7,8 +7,11 @@ import "./assets/styles/main.scss";
 import "quill/dist/quill.core.css";
 import "quill/dist/quill.snow.css";
 import "quill/dist/quill.bubble.css";
+import CommentList from "@/components/CommentList";
 
-Vue.config.productionTip = false;
+Vue.component("CommentList", CommentList);
+
+Vue.config.productionTip = false; // 关闭生产环境提示
 
 new Vue({
   router,

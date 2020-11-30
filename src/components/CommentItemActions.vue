@@ -35,7 +35,13 @@
       >
         <i class="el-icon-delete"></i>删除
       </el-button>
-      <el-button class="btn-text-gray hover-hidden" size="medium" type="text">
+      <el-button
+        class="btn-text-gray hover-hidden"
+        size="medium"
+        type="text"
+        v-show="item.subComments.length !== 0"
+        @click="commentListShow = true"
+      >
         <span class="el el-icon-fakezhihu-Chat"></span>查看回复
       </el-button>
       <el-button class="btn-text-gray hover-hidden" size="medium" type="text">
@@ -46,6 +52,19 @@
         <span class="el el-icon-fakezhihu-flug"></span>举报
       </el-button>
     </div>
+    <el-card class="comment m-b-15" v-if="commentListShow">
+      <comment-list :targetId="item.id" :targetType="item.type" />
+      <hr class="hr m-b-15 m-t-15" color="#dcdfe6" size="1" />
+      <el-button
+        class="block-center m-b-15"
+        type="info"
+        size="mini"
+        plain
+        @click="commentListShow = false"
+      >
+        收起评论
+      </el-button>
+    </el-card>
     <div class="reply" v-show="replyShow">
       <el-input class="input" type="text" v-model="replyContent" size="small" />
       <el-button
@@ -71,7 +90,8 @@ export default {
     return {
       replyShow: false, // 回复部分展示与隐藏
       replyContent: "",
-      updatedStatus: {}
+      updatedStatus: {},
+      commentListShow: false // 次级评论
     };
   },
   computed: {
