@@ -145,14 +145,17 @@ export default {
   },
   computed: {
     thanksCountText() {
-      try {
-        return JSON.parse(this.activeStatus.thanks).indexOf(this.userId) < 0
-          ? `${JSON.parse(this.activeStatus.thanks).length} 个感谢`
-          : "取消感谢";
-      } catch (error) {
-        console.log("出错了");
-        return "感谢";
+      if (_.isEmpty(this.activeStatus)) {
+        return "0个感谢";
       }
+      return JSON.parse(this.activeStatus.thanks).indexOf(this.userId) < 0
+        ? `${JSON.parse(this.activeStatus.thanks).length} 个感谢`
+        : "取消感谢";
+      // try {
+      // } catch (error) {
+      //   console.log("出错了");
+      //   return "感谢";
+      // }
     },
     activeStatus() {
       return _.isEmpty(this.updatedStatus) ? this.status : this.updatedStatus;

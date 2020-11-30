@@ -23,6 +23,9 @@ module.exports = {
       },
       "/status": {
         target: "http://127.0.0.1:3000"
+      },
+      "/hot-list-web": {
+        target: "https://www.zhihu.com/api/v3/feed/topstory/"
       }
     }
   }

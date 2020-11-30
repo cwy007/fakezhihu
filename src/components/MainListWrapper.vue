@@ -4,6 +4,7 @@
 
     <el-card>
       <div class="card-content">
+        <!-- <router-view></router-view> -->
         <router-view
           v-for="(item, index) in fakeInfo"
           :key="index"
@@ -33,17 +34,22 @@ export default {
   watch: {
     $route: "fetchData"
   },
+  beforeMounted() {
+    this.fakeInfo = []; // 解决 home 和 hot 按钮之间切换时，由于数据结构不一致导致的报错
+  },
   mounted() {
     this.fetchData();
   },
   methods: {
     fetchData() {
       this.loading = true;
+      this.fakeInfo = [];
       if (this.$route.name === "home") {
         this.getNormalList();
         this.loading = false;
       } else if (this.$route.name === "hot") {
-        console.log("route name is hot");
+        this.getHotList();
+        this.loading = false;
       } else {
         this.getNormalList();
         this.loading = false;
@@ -55,6 +61,19 @@ export default {
           this.fakeInfo = res.data.list;
         }
       });
+    },
+    async getHotList() {
+      await request
+        .get("/hot-list-web", {
+          limit: 50,
+          desktop: true
+        })
+        .then(res => {
+          if (res.status === 200) {
+            this.fakeInfo = [];
+            this.fakeInfo = res.data.data;
+          }
+        });
     }
   }
 };

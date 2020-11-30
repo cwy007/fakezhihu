@@ -7,6 +7,7 @@ import SignUp from "../views/SignUp.vue";
 import Editor from "../views/Editor.vue";
 import DetailsArticle from "../views/DetailsArticle.vue";
 import DetailsQuestion from "../views/DetailsQuestion.vue";
+import ListItemHot from "../components/ListItemHot.vue";
 
 Vue.use(VueRouter);
 
@@ -23,8 +24,23 @@ const routes = [
             path: "",
             name: "home",
             component: ListItem
+          },
+          {
+            path: "hot",
+            name: "hot",
+            component: ListItemHot
           }
         ]
+      },
+      {
+        path: "/article/:id",
+        name: "detailsArticle",
+        component: DetailsArticle
+      },
+      {
+        path: "/question/:id",
+        name: "detailsQuestion",
+        component: DetailsQuestion
       }
     ]
   },
@@ -37,16 +53,6 @@ const routes = [
     path: "/editor/:articleId",
     name: "editor",
     component: Editor
-  },
-  {
-    path: "/article/:id",
-    name: "detailsArticle",
-    component: DetailsArticle
-  },
-  {
-    path: "/question/:id",
-    name: "detailsQuestion",
-    component: DetailsQuestion
   },
   {
     path: "/about",
