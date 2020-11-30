@@ -91,12 +91,7 @@
       </el-dropdown>
     </div>
     <el-card class="comment" v-if="commentListShow">
-      <comment-list
-        v-bind="$attrs"
-        v-on="$listeners"
-        :targetId="itemId"
-        :targetType="type"
-      />
+      <comment-list v-on="$listeners" :targetId="itemId" :targetType="type" />
       <hr class="hr m-b-15 m-t-15" color="#dcdfe6" size="1" />
       <el-button
         class="block-center m-b-15"
@@ -114,7 +109,7 @@
       :visible.sync="commentDialogShow"
       :modal-append-to-body="false"
     >
-      <comment-list :targetId="itemId" :targetType="type" />
+      <comment-list v-on="$listeners" :targetId="itemId" :targetType="type" />
     </el-dialog>
   </div>
 </template>

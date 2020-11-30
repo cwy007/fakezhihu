@@ -23,10 +23,12 @@
     </div>
 
     <list-item-actions
+      v-on="$listeners"
       v-if="articleData.status"
       :itemId="articleData.id"
       :thanks_count="JSON.parse(articleData.status.thanks).length"
-      :comment_count="articleData.comment ? articleData.comment.length : 0"
+      :comment_count="commentCount"
+      @update-comment-count="updateCommentCount"
       :voteup_count="JSON.parse(articleData.status.voteUp).length"
       :relationship="33"
       :showActionItems="showActionItems"
@@ -51,7 +53,8 @@ export default {
         "more"
       ],
       loading: true,
-      articleData: {}
+      articleData: {},
+      commentCount: 0
     };
   },
   components: { ListItemActions },
@@ -59,6 +62,22 @@ export default {
     this.getArticle();
   },
   methods: {
+    async updateCommentCount() {
+      console.log("update-comment-count is called");
+      await request
+        .get("/articles", {
+          articleId: this.articleData.id
+        })
+        .then(res => {
+          if (res.data.status === 200) {
+            this.commentCount = res.data.content.comments
+              ? res.data.content.comments.length
+              : 0;
+          } else {
+            this.$message.error("获取文章失败，请稍后再试");
+          }
+        });
+    },
     async getArticle() {
       await request
         .get("/articles", {
@@ -67,6 +86,9 @@ export default {
         .then(res => {
           if (res.data.status === 200) {
             this.articleData = res.data.content;
+            this.commentCount = res.data.content.comments
+              ? res.data.content.comments.length
+              : 0;
             this.loading = false;
           } else {
             this.$message.error("获取文章失败，请稍后再试");
