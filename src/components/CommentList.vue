@@ -23,7 +23,7 @@ import { getCookies } from "@/lib/utils";
 import CommentItem from "@/components/CommentItem";
 
 export default {
-  props: ["targetId", "targetType"],
+  props: ["targetId", "targetType", "watchCommentListUpdated"],
   data() {
     return {
       loading: false,
@@ -31,11 +31,22 @@ export default {
       commentList: []
     };
   },
+  watch: {
+    watchCommentListUpdated: function() {
+      // 重新获取次级评论
+      this.getComments();
+    }
+  },
   components: { CommentItem },
   mounted() {
     this.getComments();
   },
   methods: {
+    /**
+     * 这个方法是获取一经评论的内容
+     * 1. 问题的一级评论
+     * 2. 答案的一级评论
+     */
     async getComments() {
       this.loading = true;
       await request
@@ -47,6 +58,7 @@ export default {
           if (res.data.status === 200) {
             this.commentList = res.data.list;
             this.loading = false;
+            this.comment = "";
           } else {
             this.$message.error(res.error);
           }

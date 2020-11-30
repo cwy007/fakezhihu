@@ -53,7 +53,11 @@
       </el-button>
     </div>
     <el-card class="comment m-b-15" v-if="commentListShow">
-      <comment-list :targetId="item.id" :targetType="item.type" />
+      <comment-list
+        :targetId="item.id"
+        :targetType="item.type"
+        :watchCommentListUpdated="watchCommentListUpdated"
+      />
       <hr class="hr m-b-15 m-t-15" color="#dcdfe6" size="1" />
       <el-button
         class="block-center m-b-15"
@@ -91,7 +95,8 @@ export default {
       replyShow: false, // 回复部分展示与隐藏
       replyContent: "",
       updatedStatus: {},
-      commentListShow: false // 次级评论
+      commentListShow: false, // 次级评论
+      watchCommentListUpdated: false
     };
   },
   computed: {
@@ -109,6 +114,7 @@ export default {
   },
   methods: {
     async createComment() {
+      console.log("this.item", this.item);
       await request
         .post("/comments", {
           targetId: this.item.id,
@@ -119,7 +125,12 @@ export default {
         .then(res => {
           if (res.data.status === 201) {
             this.$message.success("评论成功");
-            this.$emit("get-comments");
+            if (this.item.type === 3 && this.commentListShow) {
+              this.watchCommentListUpdated = !this.watchCommentListUpdated;
+            } else {
+              this.$emit("get-comments");
+            }
+            this.replyContent = "";
           }
         });
     },
