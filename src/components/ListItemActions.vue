@@ -31,6 +31,15 @@
         class="btn-text-gray m-l-25"
         size="medium"
         type="text"
+        @click="displayComments"
+      >
+        <span class="el el-icon-fakezhihu-comment"></span>评论
+      </el-button>
+      <el-button
+        v-if="showActionItems.indexOf('comment') >= 0"
+        class="btn-text-gray m-l-25"
+        size="medium"
+        type="text"
       >
         <span class="el-el-icon-fakezhihu-comment"></span>
         {{ comment_count }} 条评论
@@ -80,15 +89,6 @@
           <el-dropdown-item>不感兴趣</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
-      <el-button
-        v-if="showActionItems.indexOf('comment') >= 0"
-        class="btn-text-gray m-l-25"
-        size="medium"
-        type="text"
-        @click="displayComments"
-      >
-        <span class="el el-icon-fakezhihu-comment"></span>评论
-      </el-button>
     </div>
     <el-card class="comment" v-if="commentListShow">
       <comment-list :targetId="itemId" :targetType="type" />

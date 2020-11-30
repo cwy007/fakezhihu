@@ -13,6 +13,7 @@
     "core-js": "^3.6.5",
     "element-ui": "^2.14.1",
     "md5": "^2.3.0",
+    "moment": "^2.29.1",
     "vue": "^2.6.11",
     "vue-quill-editor": "^3.0.6",
     "vue-router": "^3.2.0",
