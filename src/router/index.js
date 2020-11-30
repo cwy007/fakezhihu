@@ -8,6 +8,7 @@ import Editor from "../views/Editor.vue";
 import DetailsArticle from "../views/DetailsArticle.vue";
 import DetailsQuestion from "../views/DetailsQuestion.vue";
 import ListItemHot from "../components/ListItemHot.vue";
+import People from "../views/People.vue";
 
 Vue.use(VueRouter);
 
@@ -43,6 +44,11 @@ const routes = [
         component: DetailsQuestion
       }
     ]
+  },
+  {
+    path: "/people/:id",
+    name: "people",
+    component: People
   },
   {
     path: "/signup",
