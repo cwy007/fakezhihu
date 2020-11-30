@@ -65,6 +65,7 @@
       v-on="$listeners"
       :type="type"
       :itemId="item.id"
+      :status="item.status"
       :thanks_count="JSON.parse(item.status.thanks).length"
       :comment_count="commentCount"
       @update-comment-count="updateCommentCount"

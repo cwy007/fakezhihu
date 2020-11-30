@@ -20,6 +20,9 @@ module.exports = {
       },
       "/comments": {
         target: "http://127.0.0.1:3000"
+      },
+      "/status": {
+        target: "http://127.0.0.1:3000"
       }
     }
   }
