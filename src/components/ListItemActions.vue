@@ -80,18 +80,69 @@
           <el-dropdown-item>不感兴趣</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
+      <el-button
+        v-if="showActionItems.indexOf('comment') >= 0"
+        class="btn-text-gray m-l-25"
+        size="medium"
+        type="text"
+        @click="displayComments"
+      >
+        <span class="el el-icon-fakezhihu-comment"></span>评论
+      </el-button>
     </div>
+    <el-card class="comment" v-if="commentListShow">
+      <comment-list :targetId="itemId" :targetType="type" />
+      <hr class="hr m-b-15 m-t-15" color="#dcdfe6" size="1" />
+      <el-button
+        class="block-center m-b-15"
+        type="info"
+        size="mini"
+        plain
+        @click="commentListShow = false"
+      >
+        收起评论
+      </el-button>
+    </el-card>
+    <el-dialog
+      class="no-title-dialog"
+      title=""
+      :visible.sync="commentDialogShow"
+      :modal-append-to-body="false"
+    >
+      <comment-list :targetId="itemId" :targetType="type" />
+    </el-dialog>
   </div>
 </template>
 
 <script>
+import CommentList from "./CommentList.vue";
+
 export default {
   props: [
     "comment_count",
     "thanks_count",
     "voteup_count",
     "metrics_area",
-    "showActionItems"
-  ]
+    "showActionItems",
+    "commentShowType", // 不传递时，点击评论按钮默认显示弹窗dialog形式的评论
+    "type",
+    "itemId"
+  ],
+  data() {
+    return {
+      commentListShow: false, // 评论列表
+      commentDialogShow: false // 评论弹窗
+    };
+  },
+  components: { CommentList },
+  methods: {
+    displayComments() {
+      if (this.commentShowType === "excerpt") {
+        this.commentListShow = true;
+      } else {
+        this.commentDialogShow = true;
+      }
+    }
+  }
 };
 </script>

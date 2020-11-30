@@ -69,6 +69,7 @@
       :comment_count="20"
       :voteup_count="JSON.parse(item.status.voteUp).length"
       :relationship="33"
+      :commentShowType="showType"
       :showActionItems="[
         'vote',
         'thanks',
