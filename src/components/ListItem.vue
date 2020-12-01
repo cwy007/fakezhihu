@@ -13,7 +13,7 @@
       </h2>
     </div>
 
-    <div class="creater-info clearfix" v-if="showPart.indexOf('creator') >= 0">
+    <div class="author-info clearfix" v-if="showPart.indexOf('creator') >= 0">
       <router-link
         :to="{
           name: 'people',

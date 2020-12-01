@@ -42,7 +42,7 @@
         <el-dropdown placeholder="bottom" trigger="click" class="hand-click">
           <span>
             {{ this.name }}
-            <img src="./../assets/imgs/avatar.jpg" alt="" class="avatar" />
+            <img :src="avatarUrl" alt="" class="avatar" />
           </span>
           <el-dropdown-menu slot="dropdown">
             <!-- 若不使用native修饰符，无法获取到组件内部的内容，单击也会因此无效 -->
@@ -79,7 +79,8 @@ export default {
       keywords: "",
       isLogin: false,
       name: "",
-      askModelVisible: false
+      askModelVisible: false,
+      avatarUrl: ""
     };
   },
   mounted() {
@@ -90,6 +91,7 @@ export default {
       await request.get("/users/checkLogin").then(res => {
         if (res.status === 200) {
           this.name = res.data.name;
+          this.avatarUrl = res.data.avatarUrl;
           this.isLogin = true;
         } else {
           this.$router.push({ name: "signup" });
@@ -102,6 +104,7 @@ export default {
         if (res.status === 200) {
           this.$message.success("注销成功");
           this.name = "";
+          this.avatarUrl = "";
           this.$router.push({ name: "signup" });
         } else {
           this.$message.error("注销失败，请稍后再试");

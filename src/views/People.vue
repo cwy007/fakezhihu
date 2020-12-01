@@ -8,23 +8,55 @@
         />
       </div>
       <div class="profile-header-wrapper">
-        <img :src="userInfo.avatarUrl" alt="" />
+        <avatar-upload
+          field="file"
+          @crop-upload-success="cropUploadSuccess"
+          @crop-upload-fail="cropUploadFail"
+          url="/imgs/upload"
+          img-format="png"
+          v-model="imgUploadShow"
+          :with="300"
+          :height="300"
+        />
+        <div
+          class="avatar"
+          @click="activeUser ? (imgUploadShow = true) : ''"
+          v-show="!imgUploadShow"
+        >
+          <img :src="userInfo.avatarUrl" alt="" />
+          <p class="img-hover-tip hidden" v-if="activeUser">
+            <i class="el-icon-edit"></i>单击更改图片
+          </p>
+        </div>
         <div class="content">
-          <ul class="content-edit clearfix" v-show="userInfoEditorShow">
-            <li>
-              <span>座右铭</span>
-              <el-input type="text" v-model="newHeadLine" maxlength="150" />
-            </li>
-          </ul>
           <p class="username">{{ userInfo.name }}</p>
           <div class="content-header" v-show="!userInfoEditorShow">
             <p class="introduce">{{ userInfo.headline }}</p>
           </div>
+          <ul class="content-edit clearfix" v-show="userInfoEditorShow">
+            <li>
+              <span>座右铭：</span>
+              <el-input type="text" v-model="newHeadLine" maxlength="150" />
+            </li>
+          </ul>
           <div class="sex" v-if="!detailsShow">
             <span class="el el-icon-fakezhihu-sexm middle-icon"></span>
           </div>
           <div class="details" v-if="detailsShow">
-            个人具体信息静态展示
+            <div class="item">
+              <span class="type">所在行业</span>
+              <span class="info">电子游戏</span>
+            </div>
+            <div class="item">
+              <span class="type">职业经历</span>
+              <span class="info">游戏制作人</span>
+            </div>
+            <div class="item">
+              <span class="type">个人简介</span>
+              <span class="info"
+                >斯维斯约徳高原上有一块巨石,它高一百英里,宽也一百英里。每隔一千年,便会有一只小鸟飞来打磨自己的喙，直到巨石磨光，永恒中便过了一天。</span
+              >
+            </div>
           </div>
           <el-button
             class="btn-text-gray"
@@ -69,7 +101,7 @@
               </el-button>
               <el-button
                 type="primary"
-                @click="updateUserInfo('headline', userInfo.headline)"
+                @click="updateUserInfo('headline', newHeadLine)"
               >
                 保存
               </el-button>
@@ -171,16 +203,19 @@
 import SidebarFooter from "../components/SidebarFooter.vue";
 import request from "@/service";
 import { getCookies } from "@/lib/utils";
+import AvatarUpload from "vue-image-crop-upload";
+import { imgDec } from "@/lib/config";
 
 export default {
-  components: { SidebarFooter },
+  components: { SidebarFooter, AvatarUpload },
   data() {
     return {
       userInfo: {},
       userLoading: false,
       detailsShow: false,
       userInfoEditorShow: false,
-      newHeadLine: ""
+      newHeadLine: "",
+      imgUploadShow: false
     };
   },
   computed: {
@@ -196,11 +231,12 @@ export default {
       this.userLoading = true;
       await request
         .get("/users", {
-          userId: getCookies("id")
+          userId: this.$route.params.id
         })
         .then(res => {
           if (res.data.status === 200) {
             this.userInfo = res.data.content;
+            this.newHeadLine = this.userInfo.headline;
             this.userLoading = false;
           } else {
             this.$message.error("获取用户信息失败，请稍后再试");
@@ -226,6 +262,13 @@ export default {
           this.userInfoEditorShow = false;
         });
       this.userLoading = false;
+    },
+    cropUploadSuccess(res) {
+      this.updateUserInfo("avatarUrl", `${imgDec}${res.fileName}`);
+      this.imgUploadShow = false;
+    },
+    cropUploadFail() {
+      this.$message.error("上传失败，请稍后再试");
     }
   }
 };
