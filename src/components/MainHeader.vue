@@ -45,11 +45,10 @@
             <img src="./../assets/imgs/avatar.jpg" alt="" class="avatar" />
           </span>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>
-              <div @click="goToPersonalPage">
-                <span class="el el-icon-fakezhihu-person"></span>
-                我的主页
-              </div>
+            <!-- 若不使用native修饰符，无法获取到组件内部的内容，单击也会因此无效 -->
+            <el-dropdown-item @click.native="goToPersonalPage">
+              <span class="el el-icon-fakezhihu-person"></span>
+              我的主页
             </el-dropdown-item>
             <el-dropdown-item divided>
               <i class="el-icon-setting">设置</i>
@@ -70,6 +69,7 @@
 <script>
 import request from "@/service";
 import AskModel from "./AskModel.vue";
+import { getCookies } from "@/lib/utils";
 
 export default {
   components: { AskModel },
@@ -112,7 +112,7 @@ export default {
       console.log(key);
     },
     goToPersonalPage() {
-      console.log("跳转到用户首页");
+      this.$router.push(`/people/${getCookies("id")}`);
     },
     changeAskModelVisible(status) {
       this.askModelVisible = status;

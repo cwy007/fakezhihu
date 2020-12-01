@@ -2,10 +2,17 @@
   <div class="comment-item">
     <div class="header clearfix">
       <div class="user-info">
-        <span class="avatar">
-          <img :src="item.author.avatarUrl" alt="" />
-        </span>
-        <span class="username">{{ item.author.name }}</span>
+        <router-link
+          :to="{
+            name: 'people',
+            params: { id: item.author ? item.author.id : 0 }
+          }"
+        >
+          <span class="avatar">
+            <img :src="item.author.avatarUrl" alt="" />
+          </span>
+          <span class="username">{{ item.author.name }}</span>
+        </router-link>
       </div>
       <span class="content">{{ item.content }}</span>
     </div>

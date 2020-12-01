@@ -13,14 +13,19 @@
       </h2>
     </div>
 
-    <div class="creater-info" v-if="showPart.indexOf('creator') >= 0">
-      <div class="avatar">
+    <div class="creater-info clearfix" v-if="showPart.indexOf('creator') >= 0">
+      <router-link
+        :to="{
+          name: 'people',
+          params: { id: item.author ? item.author.id : 0 }
+        }"
+      >
         <img :src="item.author ? item.author.avatarUrl : ''" alt="" />
-      </div>
-      <div class="userinfo">
-        <p class="username">{{ item.author.name }}</p>
-        <p class="headline">{{ item.author.headline }}</p>
-      </div>
+        <div class="detail">
+          <p class="username">{{ item.author ? item.author.name : "" }}</p>
+          <p class="headline">{{ item.author ? item.author.headline : "" }}</p>
+        </div>
+      </router-link>
     </div>
 
     <div class="vote" v-if="showPart.indexOf('votes') >= 0">
@@ -48,6 +53,17 @@
       </div>
 
       <div class="content" v-if="showType === 'all'">
+        <router-link
+          v-if="!showPart.includes('creator')"
+          class="minicreator-info clearfix"
+          :to="{
+            name: 'people',
+            params: { id: item.author ? item.author.id : 0 }
+          }"
+        >
+          <img class="avatar" :src="item.author ? item.author.avatarUrl : ''" />
+          <p class="username">{{ item.author ? item.author.name : "" }}</p>
+        </router-link>
         <span v-html="item.content"></span>
         <el-button
           class="btn-no-padding"

@@ -51,7 +51,84 @@
         列表主要内容（稍后开发）
       </div>
       <div class="profile-sidebar">
-        个人相关信息静态展示．.
+        <el-card class="achievement">
+          <div class="list-header">
+            <span>个人成就</span>
+          </div>
+          <div class="list-item">
+            <div class="title">
+              <p>
+                <span
+                  class="el el-icon-fakezhihu-like middle-icon side-padding"
+                ></span>
+                获得8644次赞同
+              </p>
+            </div>
+            <p class="info">获得2,733次感谢，21,791次收藏</p>
+          </div>
+          <div class="list-item">
+            <div class="title">
+              <p>
+                <span
+                  class="el el-icon-fakezhihu-edit-together middle-icon side-padding"
+                ></span>
+                参与6次公共编辑
+              </p>
+            </div>
+          </div>
+        </el-card>
+        <el-card class="followship">
+          <div class="numberBoard">
+            <div class="item">
+              <p class="text">关注了</p>
+              <strong class="num">43</strong>
+            </div>
+            <div class="item">
+              <p class="text">关注者</p>
+              <strong class="num">433</strong>
+            </div>
+          </div>
+        </el-card>
+        <el-card class="no-padding m-b-15">
+          <div class="nav-link">
+            <a href="#">
+              <span class="text">
+                赞助的Live
+                <span class="el el-icon-fakezhihu-Thunder"></span>
+              </span>
+            </a>
+          </div>
+          <div class="nav-link">
+            <a href="#">
+              <span class="text">
+                关注的话题
+              </span>
+              <span class="num">320</span>
+            </a>
+          </div>
+          <div class="nav-link">
+            <a href="#">
+              <span class="text">
+                关注的专栏
+              </span>
+              <span class="num">21</span>
+            </a>
+          </div>
+          <div class="nav-link">
+            <a href="#">
+              <span class="text">
+                关注的问题
+              </span>
+            </a>
+          </div>
+          <div class="nav-link">
+            <a href="#">
+              <span class="text">
+                关注的收藏夹
+              </span>
+            </a>
+          </div>
+        </el-card>
         <sidebar-footer />
       </div>
     </div>
