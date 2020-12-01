@@ -10,6 +10,12 @@
       <div class="profile-header-wrapper">
         <img :src="userInfo.avatarUrl" alt="" />
         <div class="content">
+          <ul class="content-edit clearfix" v-show="userInfoEditorShow">
+            <li>
+              <span>座右铭</span>
+              <el-input type="text" v-model="newHeadLine" maxlength="150" />
+            </li>
+          </ul>
           <p class="username">{{ userInfo.name }}</p>
           <div class="content-header" v-show="!userInfoEditorShow">
             <p class="introduce">{{ userInfo.headline }}</p>
@@ -38,9 +44,35 @@
           >
             收起详细资料
           </el-button>
-          <div class="btn-group" v-show="!activeUser">
-            <div class="notActiveUser">
-              主页用户非当前登录用户展示静态内容
+          <div class="btn-group">
+            <div class="notActiveUser" v-show="!activeUser">
+              <el-button type="info">已关注</el-button>
+              <el-button type="info" plain>
+                <span class="el el-icon-fakezhihu-xiaoxi-control"></span>
+                发私信
+              </el-button>
+            </div>
+            <div
+              class="activeUserShow"
+              v-show="activeUser && !userInfoEditorShow"
+            >
+              <el-button type="primary" @click="userInfoEditorShow = true">
+                编辑个人信息
+              </el-button>
+            </div>
+            <div
+              class="activeUserEditor"
+              v-show="activeUser && userInfoEditorShow"
+            >
+              <el-button type="dafault" @click="userInfoEditorShow = false">
+                取消
+              </el-button>
+              <el-button
+                type="primary"
+                @click="updateUserInfo('headline', userInfo.headline)"
+              >
+                保存
+              </el-button>
             </div>
           </div>
         </div>
@@ -147,7 +179,8 @@ export default {
       userInfo: {},
       userLoading: false,
       detailsShow: false,
-      userInfoEditorShow: false
+      userInfoEditorShow: false,
+      newHeadLine: ""
     };
   },
   computed: {
@@ -174,6 +207,25 @@ export default {
             this.$router.push({ name: "home" });
           }
         });
+    },
+    async updateUserInfo(key, value) {
+      this.userLoading = true;
+      await request
+        .put("/users", {
+          id: parseFloat(getCookies("id")),
+          colName: key,
+          value
+        })
+        .then(res => {
+          if (res.data.content === [0]) {
+            this.$message.error("修改失败，请稍后再试");
+          } else {
+            this.$message.success("修改成功");
+            this.userInfo[key] = value;
+          }
+          this.userInfoEditorShow = false;
+        });
+      this.userLoading = false;
     }
   }
 };
