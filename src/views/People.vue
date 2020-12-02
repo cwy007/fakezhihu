@@ -112,7 +112,18 @@
     </el-card>
     <div class="profile-main">
       <div class="profile-content">
-        列表主要内容（稍后开发）
+        <main-list-nav :type="'people'" />
+        <el-card v-show="listInfo.length > 0">
+          <router-view
+            v-for="(item, index) in listInfo"
+            :key="index"
+            :item="item"
+            :showPart="['title', 'creator', 'votes']"
+            :type="item.type"
+            :activeUser="activeUser"
+          />
+        </el-card>
+        <el-card v-show="listInfo.length === 0">当前没有数据</el-card>
       </div>
       <div class="profile-sidebar">
         <el-card class="achievement">
@@ -205,9 +216,10 @@ import request from "@/service";
 import { getCookies } from "@/lib/utils";
 import AvatarUpload from "vue-image-crop-upload";
 import { imgDec } from "@/lib/config";
+import MainListNav from "../components/MainListNav.vue";
 
 export default {
-  components: { SidebarFooter, AvatarUpload },
+  components: { SidebarFooter, AvatarUpload, MainListNav },
   data() {
     return {
       userInfo: {},
@@ -215,7 +227,9 @@ export default {
       detailsShow: false,
       userInfoEditorShow: false,
       newHeadLine: "",
-      imgUploadShow: false
+      imgUploadShow: false,
+      listLoading: false,
+      listInfo: []
     };
   },
   computed: {

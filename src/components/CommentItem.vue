@@ -4,7 +4,7 @@
       <div class="user-info">
         <router-link
           :to="{
-            name: 'people',
+            name: 'peopleMain',
             params: { id: item.author ? item.author.id : 0 }
           }"
         >

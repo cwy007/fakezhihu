@@ -47,8 +47,14 @@ const routes = [
   },
   {
     path: "/people/:id",
-    name: "people",
-    component: People
+    component: People,
+    children: [
+      {
+        path: "",
+        name: "peopleMain",
+        component: ListItem
+      }
+    ]
   },
   {
     path: "/signup",
