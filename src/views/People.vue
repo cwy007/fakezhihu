@@ -1,5 +1,22 @@
 <template>
   <div class="people" v-loading="userLoading">
+    <el-dialog
+      :title="editorAnswer.question.title"
+      :visible.sync="editorShow"
+      :modal-append-to-body="false"
+    >
+      <rich-text-editor
+        class="with-border m-t-10"
+        ref="answerEditor"
+        :content="editorAnswer.content"
+        :placeHolder="editorPlaceholder"
+        @update-content="updateContent"
+      />
+      <div class="footer m-t-10">
+        <el-button @click="editorShow = false">取消</el-button>
+        <el-button type="primary" @click="updateAnswer">确定</el-button>
+      </div>
+    </el-dialog>
     <el-card class="profile">
       <div class="profile-header-cover">
         <img
@@ -121,6 +138,8 @@
             :showPart="['title', 'creator', 'votes']"
             :type="item.type"
             :activeUser="activeUser"
+            @get-list="getList"
+            @editor-show-fuc="editorShowFuc"
           />
         </el-card>
         <el-card v-show="listInfo.length === 0">当前没有数据</el-card>
@@ -217,9 +236,11 @@ import { getCookies } from "@/lib/utils";
 import AvatarUpload from "vue-image-crop-upload";
 import { imgDec } from "@/lib/config";
 import MainListNav from "../components/MainListNav.vue";
+import RichTextEditor from "../components/RichTextEditor.vue";
+import _ from "lodash";
 
 export default {
-  components: { SidebarFooter, AvatarUpload, MainListNav },
+  components: { SidebarFooter, AvatarUpload, MainListNav, RichTextEditor },
   data() {
     return {
       userInfo: {},
@@ -235,7 +256,13 @@ export default {
         peopleMain: "/answers/creator",
         peopleArticles: "/articles/creator",
         peopleAsks: "/questions/creator"
-      }
+      },
+      editorAnswer: {
+        question: { title: "" },
+        content: ""
+      },
+      editorPlaceholder: "修改回答",
+      editorShow: false
     };
   },
   computed: {
@@ -309,6 +336,44 @@ export default {
             this.$message.error("请求个人信息失败，请稍后再试");
             this.$router.push({ name: "home" });
           }
+        });
+    },
+    async editorShowFuc(id) {
+      this.editorAnswer = Object.assign(
+        {},
+        _.find(this.listInfo, item => item.id === id)
+      );
+      this.editorShow = true;
+      // placeHoder 在这个失效了？
+      await this.waittingForRender(0);
+      this.$refs.answerEditor.updateContent(this.editorAnswer.content);
+    },
+    updateContent(content, contentText) {
+      this.editorAnswer.content = content;
+      this.editorAnswer.excerpt = contentText.slice(0, 100);
+    },
+    waittingForRender(ms) {
+      if (!this.$refs.answerEditor) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+      }
+      return null;
+    },
+    async updateAnswer() {
+      await request
+        .put("/answers", {
+          creatorId: getCookies("id"),
+          answerId: this.editorAnswer.id,
+          content: this.editorAnswer.content,
+          excerpt: this.editorAnswer.excerpt
+        })
+        .then(res => {
+          if (res.data.msg === [0]) {
+            this.$message.error("修改失败，请稍后再试");
+          } else {
+            this.$message.success("修改成功");
+            this.getList();
+          }
+          this.editorShow = false;
         });
     }
   }

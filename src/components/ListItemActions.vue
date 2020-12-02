@@ -227,7 +227,7 @@ export default {
     editContent() {
       if (this.type === 2) {
         // article:0, question:1, answer:2, comment:3
-        this.$emit("editor-show-fun", this.itemId);
+        this.$emit("editor-show-fuc", this.itemId);
       }
     },
     deleteContent() {

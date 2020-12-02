@@ -5,7 +5,7 @@
         <router-link
           :to="{
             name: type === 0 ? 'detailsArticle' : 'detailsQuestion',
-            params: { id: item.id }
+            params: { id: transtedInfo.id }
           }"
         >
           {{ transtedInfo.title }}
@@ -112,12 +112,14 @@ export default {
       // article
       if (this.type === 0) {
         return {
+          id: this.item.id,
           title: this.showPart.includes("title") ? this.item.title : "",
           cover: this.item.cover || ""
         };
         // answer
       } else if (this.type === 2 && this.showPart.includes("title")) {
         return {
+          id: this.item.question.id,
           title: this.item.question.title,
           cover: this.item.thumbnail || ""
         };
