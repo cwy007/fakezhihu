@@ -43,27 +43,27 @@ const routes = [
         path: "/question/:id",
         name: "detailsQuestion",
         component: DetailsQuestion
-      }
-    ]
-  },
-  {
-    path: "/people/:id",
-    component: People,
-    children: [
-      {
-        path: "",
-        name: "peopleMain",
-        component: ListItem
       },
       {
-        path: "asks",
-        name: "peopleAsks",
-        component: AsksItem
-      },
-      {
-        path: "articles",
-        name: "peopleArticles",
-        component: ListItem
+        path: "/people/:id",
+        component: People,
+        children: [
+          {
+            path: "",
+            name: "peopleMain",
+            component: ListItem
+          },
+          {
+            path: "asks",
+            name: "peopleAsks",
+            component: AsksItem
+          },
+          {
+            path: "articles",
+            name: "peopleArticles",
+            component: ListItem
+          }
+        ]
       }
     ]
   },
