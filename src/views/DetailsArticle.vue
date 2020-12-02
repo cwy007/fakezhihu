@@ -6,9 +6,13 @@
       </div>
       <h1 class="title">{{ articleData.title }}</h1>
       <div class="author-info" v-if="articleData.author">
-        <div class="avatar">
-          <img :src="articleData.author.avatarUrl || ''" alt="" />
-        </div>
+        <router-link
+          :to="{ name: 'peopleMain', params: { id: articleData.author.id } }"
+        >
+          <div class="avatar">
+            <img :src="articleData.author.avatarUrl || ''" alt="" />
+          </div>
+        </router-link>
         <div class="userinfo">
           <p class="username">{{ articleData.author.name }}</p>
           <p class="headline">{{ articleData.author.headline }}</p>

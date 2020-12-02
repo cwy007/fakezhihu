@@ -271,7 +271,12 @@ export default {
     }
   },
   watch: {
-    $route: "getList"
+    $route: function() {
+      if (this.$route.params.id !== this.userInfo.id) {
+        this.getUser(); // 路由发生变化时，要重新获取用户数据
+      }
+      this.getList();
+    }
   },
   mounted() {
     this.getList();

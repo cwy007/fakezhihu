@@ -225,12 +225,21 @@ export default {
       }
     },
     editContent() {
+      if (this.type === 0) {
+        this.$router.push({
+          name: "editor",
+          params: { articleId: this.itemId }
+        });
+      }
       if (this.type === 2) {
         // article:0, question:1, answer:2, comment:3
         this.$emit("editor-show-fuc", this.itemId);
       }
     },
     deleteContent() {
+      if (this.type === 0) {
+        this.deleteArticles();
+      }
       if (this.type === 2) {
         this.deleteAnswers();
       }
@@ -239,6 +248,20 @@ export default {
       await request
         .delete("/answers", {
           data: { userId: this.userId, answerId: this.itemId }
+        })
+        .then(res => {
+          if (res.data.status === 202) {
+            this.$message.success("删除成功");
+            this.$emit("get-list");
+          } else {
+            this.$message.error(res.data.msg);
+          }
+        });
+    },
+    async deleteArticles() {
+      await request
+        .delete("/articles", {
+          data: { creatorId: getCookies("id"), articleId: this.itemId }
         })
         .then(res => {
           if (res.data.status === 202) {

@@ -54,6 +54,11 @@ export default {
       imgUrl: "" // 题图url
     };
   },
+  mounted() {
+    if (parseFloat(this.$route.params.articleId) !== 0) {
+      this.getArticleInfo();
+    }
+  },
   methods: {
     uploadSuc(response) {
       this.imgUrl = `${imgDec}${response.fileName}`;
@@ -64,7 +69,7 @@ export default {
     },
     releaseArticles() {
       if (parseFloat(this.$route.params.articleId) !== 0) {
-        console.log("修改文章");
+        this.updateArticle();
       } else {
         this.createArticle();
       }
@@ -81,8 +86,50 @@ export default {
         .then(res => {
           if (res.data.status === 201) {
             this.$message.success("文章新建成功！");
+            this.$router.push({
+              path: `/article/${res.data.id}`
+            });
           } else {
             this.$message.error(res.error);
+          }
+        });
+    },
+    async getArticleInfo() {
+      await request
+        .get("/articles", {
+          articleId: this.$route.params.articleId
+        })
+        .then(res => {
+          if (res.data.status === 200) {
+            const articleInfo = res.data.content;
+            this.content = articleInfo.content;
+            this.imgUrl = articleInfo.cover;
+            this.title = articleInfo.title;
+            this.$refs.textEditor.updateContent(this.content);
+          } else {
+            this.$message.error("获取文章失败，请稍后再试");
+            this.$router.go(-1);
+          }
+        });
+    },
+    async updateArticle() {
+      await request
+        .put("/articles", {
+          articleId: this.$route.params.articleId,
+          content: this.content,
+          excerpt: this.contentText.slice(0, 100),
+          title: this.title,
+          imgUrl: this.imgUrl,
+          userId: getCookies("id")
+        })
+        .then(res => {
+          if (res.data.msg === [0]) {
+            this.$message.error("文章修改失败，请稍后再试");
+          } else {
+            this.$message.success("文章修改成功");
+            this.$router.push({
+              path: `/people/${getCookies("id")}/articles`
+            });
           }
         });
     }
