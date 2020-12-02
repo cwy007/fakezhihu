@@ -60,7 +60,7 @@ export default {
         hot: "2",
         peopleMain: "3",
         peopleAsks: "4",
-        peopleArticle: "5"
+        peopleArticles: "5"
       },
       activeIndex: "1"
     };

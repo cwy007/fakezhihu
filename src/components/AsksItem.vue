@@ -6,7 +6,7 @@
       </router-link>
     </h2>
     <span class="question-info">
-      {{ item.updatedAt | dateFilter }}•
+      {{ item.updatedAt | dateFilter }}&nbsp;•&nbsp;
       {{ item.answers ? item.answers.length : 0 }}个回答&nbsp;•&nbsp;
       {{ item.comments ? item.comments.length : 0 }}条评论
     </span>
