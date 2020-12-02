@@ -9,6 +9,7 @@ import DetailsArticle from "../views/DetailsArticle.vue";
 import DetailsQuestion from "../views/DetailsQuestion.vue";
 import ListItemHot from "../components/ListItemHot.vue";
 import People from "../views/People.vue";
+import AsksItem from "../components/AsksItem.vue";
 
 Vue.use(VueRouter);
 
@@ -53,6 +54,11 @@ const routes = [
         path: "",
         name: "peopleMain",
         component: ListItem
+      },
+      {
+        path: "asks",
+        name: "peopleAsks",
+        component: AsksItem
       },
       {
         path: "articles",
