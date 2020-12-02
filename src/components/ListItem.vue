@@ -88,14 +88,7 @@
       :voteup_count="JSON.parse(item.status.voteUp).length"
       :relationship="33"
       :commentShowType="showType"
-      :showActionItems="[
-        'vote',
-        'thanks',
-        'comment',
-        'share',
-        'favorite',
-        'more'
-      ]"
+      :showActionItems="showActionItems"
     />
   </div>
 </template>
@@ -133,6 +126,15 @@ export default {
         title: "",
         cover: ""
       };
+    },
+    showActionItems() {
+      if (
+        this.$route.name === "peopleArticles" ||
+        this.$route.name === "peopleMain"
+      ) {
+        return ["vote", "thanks", "comment", "share", "favorite", "setting"];
+      }
+      return ["vote", "thanks", "comment", "share", "favorite", "more"];
     }
   },
   methods: {

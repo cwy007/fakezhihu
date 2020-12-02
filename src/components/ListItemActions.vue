@@ -92,6 +92,26 @@
           <el-dropdown-item>不感兴趣</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
+      <el-dropdown
+        v-if="showActionItems.includes('setting') && activeUser"
+        placement="bottom"
+        class="m-l-25"
+      >
+        <el-button
+          class="btn-text-gray"
+          size="medium"
+          type="text"
+          icon="el-icon-setting"
+        >
+          设置
+        </el-button>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item @click.native="deleteContent"
+            >删除</el-dropdown-item
+          >
+          <el-dropdown-item @click.native="editContent">编辑</el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
     </div>
     <el-card class="comment" v-if="commentListShow">
       <comment-list v-on="$listeners" :targetId="itemId" :targetType="type" />
@@ -132,7 +152,8 @@ export default {
     "commentShowType", // 不传递时，点击评论按钮默认显示弹窗dialog形式的评论
     "type",
     "itemId",
-    "status"
+    "status",
+    "activeUser"
   ],
   inheritAttrs: false,
   data() {
@@ -202,6 +223,31 @@ export default {
             ? "add"
             : "pull";
       }
+    },
+    editContent() {
+      if (this.type === 2) {
+        // article:0, question:1, answer:2, comment:3
+        this.$emit("editor-show-fun", this.itemId);
+      }
+    },
+    deleteContent() {
+      if (this.type === 2) {
+        this.deleteAnswers();
+      }
+    },
+    async deleteAnswers() {
+      await request
+        .delete("/answers", {
+          data: { userId: this.userId, answerId: this.itemId }
+        })
+        .then(res => {
+          if (res.data.status === 202) {
+            this.$message.success("删除成功");
+            this.$emit("get-list");
+          } else {
+            this.$message.error(res.data.msg);
+          }
+        });
     }
   }
 };
