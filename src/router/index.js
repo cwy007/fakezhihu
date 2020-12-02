@@ -53,6 +53,11 @@ const routes = [
         path: "",
         name: "peopleMain",
         component: ListItem
+      },
+      {
+        path: "articles",
+        name: "peopleArticles",
+        component: ListItem
       }
     ]
   },
