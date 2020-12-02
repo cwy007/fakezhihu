@@ -21,7 +21,7 @@
         }"
       >
         <img :src="item.author ? item.author.avatarUrl : ''" alt="" />
-        <div class="detail">
+        <div class="userinfo">
           <p class="username">{{ item.author ? item.author.name : "" }}</p>
           <p class="headline">{{ item.author ? item.author.headline : "" }}</p>
         </div>

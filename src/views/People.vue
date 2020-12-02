@@ -229,7 +229,13 @@ export default {
       newHeadLine: "",
       imgUploadShow: false,
       listLoading: false,
-      listInfo: []
+      listInfo: [],
+      routerTrans: {
+        // 路由请求地址转换对象
+        peopleMain: "/answers/creator",
+        peopleArticles: "/articles/creator",
+        peopleAsks: "/questions/creator"
+      }
     };
   },
   computed: {
@@ -237,7 +243,11 @@ export default {
       return this.userInfo.id === parseFloat(getCookies("id"));
     }
   },
+  watch: {
+    $route: "getList"
+  },
   mounted() {
+    this.getList();
     this.getUser();
   },
   methods: {
@@ -283,6 +293,23 @@ export default {
     },
     cropUploadFail() {
       this.$message.error("上传失败，请稍后再试");
+    },
+    async getList() {
+      this.listLoading = true;
+      this.listInfo = [];
+      await request
+        .get(this.routerTrans[this.$route.name], {
+          creatorId: this.$route.params.id
+        })
+        .then(res => {
+          if (res.data.status === 200) {
+            this.listInfo = res.data.list;
+            this.listLoading = false;
+          } else {
+            this.$message.error("请求个人信息失败，请稍后再试");
+            this.$router.push({ name: "home" });
+          }
+        });
     }
   }
 };

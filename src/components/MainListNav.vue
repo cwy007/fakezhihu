@@ -24,9 +24,16 @@
       <el-menu-item
         index="5"
         v-if="type === 'people'"
-        @click="$router.push({ name: 'peopleArticle' })"
+        @click="$router.push({ name: 'peopleArticles' })"
       >
         文章
+      </el-menu-item>
+      <el-menu-item
+        index="6"
+        v-if="type === 'people'"
+        @click="$router.push({ name: 'peopleArticles' })"
+      >
+        收藏夹
       </el-menu-item>
       <el-menu-item index="7" v-if="type === 'people'">
         <el-dropdown>
