@@ -1,8 +1,14 @@
 # fakezhihu
 
+## book
+
+《Vue.js前端开发基础与项目实战》• 郑韩京/编著
+
+![book](https://tva1.sinaimg.cn/large/0081Kckwly1glat46k4lrj309y0dwtby.jpg)
+
 ## 本地测试项目
 
-[对应的后段](https://github.com/cwy007/fakezhihu-server)
+[对应的后端项目](https://github.com/cwy007/fakezhihu-server)
 
 ```shell
 git clone https://github.com/cwy007/fakezhihu.git
