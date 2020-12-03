@@ -1,38 +1,43 @@
 # fakezhihu
 
-## Project setup
-```
-npm install
-```
+## 本地测试项目
 
-### Compiles and hot-reloads for development
-```
+[对应的后段](https://github.com/cwy007/fakezhihu-server)
+
+```shell
+git clone https://github.com/cwy007/fakezhihu.git
+cd fakezhihu
+npm install
 npm run serve
 ```
 
-### Compiles and minifies for production
-```
-npm run build
-```
+### 项目页面
 
-### Run your unit tests
-```
-npm run test:unit
-```
+* 注册和登录
+<http://localhost:8080/signup>
+![signup](https://tva1.sinaimg.cn/large/0081Kckwly1glassymxe4j30rs0hndx8.jpg)
+![login](https://tva1.sinaimg.cn/large/0081Kckwly1glastwzmn8j30rs0ho4g7.jpg)
 
-### Lints and fixes files
-```
-npm run lint
-```
+* 首页
+<http://localhost:8080>
+![home](https://tva1.sinaimg.cn/large/0081Kckwly1glasvqd0f0j30l10rsq8c.jpg)
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+* 新建文章
+<http://localhost:8080/editor/0>
+![new](https://tva1.sinaimg.cn/large/0081Kckwly1glaswt8y0qj30rs08fdgb.jpg)
 
-### 模拟数据
+* 文章详情页
+<http://localhost:8080/article/46>
 
-* https://www.zhihu.com/api/v3/feed/topstory/recommend?session_token=27dc057ceb1e5b856292cbb7e1aa706e&desktop=true&page_number=3&limit=6&action=down&after_id=1
-* [富文本编辑器](https://www.npmjs.com/package/vue-quill-editor)
-* [Vue Devtools 配置open in editor](https://blog.csdn.net/qq_34707272/article/details/107381490)
+![article](https://tva1.sinaimg.cn/large/0081Kckwly1glasxvv6pwj30rs0qnjw9.jpg)
+
+* 问题详情页
+<http://localhost:8080/question/9>
+![question](https://tva1.sinaimg.cn/large/0081Kckwly1glasypkwa9j30rs0iun1i.jpg)
+
+* 个人中心
+<http://localhost:8080/people/6/>
+![person](https://tva1.sinaimg.cn/large/0081Kckwly1glaszbm6h2j30rs0nn7cn.jpg)
 
 ## targetType 字段
 
@@ -52,3 +57,10 @@ comments 表
 targetType 字段
 // article:0, question:1, answer: 2, comment:3
 ```
+
+## 参考
+
+* https://www.zhihu.com/api/v3/feed/topstory/recommend?session_token=27dc057ceb1e5b856292cbb7e1aa706e&desktop=true&page_number=3&limit=6&action=down&after_id=1
+* [富文本编辑器](https://www.npmjs.com/package/vue-quill-editor)
+* [Vue Devtools 配置open in editor](https://blog.csdn.net/qq_34707272/article/details/107381490)
+* [使用Nginx实现反向代理](https://www.cnblogs.com/jmao/p/9908559.html)
